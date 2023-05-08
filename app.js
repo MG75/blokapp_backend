@@ -1,9 +1,8 @@
 var express = require('express');
 var mysql = require('mysql');
 var connection = require('./database')
+const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
-
-
 
 var users = require('./routes/users')
 var buildings = require('./routes/buildings')
