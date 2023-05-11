@@ -13,12 +13,30 @@ router.get('/display/:id', (req, res) =>{
 })
 
 router.post('/new', (req, res) =>{
-    const [title, description, expiery_date, user_Id, blok_id] = req.body;
-    connection.query('INSERT INTO posts (title, description, expiery_date, user_id, building_id)', [title, description, expiery_date, user_Id, blok_id], (err, result) => {
+    const {title, description, date, uid, bid} = req.body;
+    connection.query('INSERT INTO posts (title, description, expiery_date, user_id, building_id) VALUES (?,?,?,?,?)', [title, description, date, uid, bid], (err, result) => {
         if (err) throw err;
+        console.log(result);
     })
 })
 
-router.post('/edit')
+router.post('/edit', (req, res) =>{
+    const {pid, title, description} = req.body;
+    connection.query('UPDATE posts SET title = ?, description = ? WHERE id =?', [title, description, pid], (err, result) =>{
+        if (err) throw err;
+        console.log(result);
+    })
+})
+
+router.post('/delete', (req, res) =>{
+    const{pid} = req.body;
+    connection.query('DELETE FROM votes WHERE post_id = ?', [pid] ,(err, result) =>{
+        if (err) throw err;
+        connection.query('DELETE FROM posts WHERE id = ?', [pid], (err, result2) =>{
+            if (err) throw err;
+            console.log('removed');
+        })
+    } )
+})
 
 module.exports = router;

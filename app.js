@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 
 var users = require('./routes/users')
 var buildings = require('./routes/buildings')
+var posts = require('./routes/posts')
+var votes = require('./routes/votes')
 
 var app = express()
 
@@ -14,6 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/users', users);
 app.use('/buildings', buildings);
+app.use('/posts', posts);
+app.use('/votes', votes)
 
 
 
