@@ -66,7 +66,7 @@ router.get('/ShowBuildings', (req, res) =>{
 
 router.post('/updatbuildings', (req, res) =>{
   const {name, bid, adress} = req.body;
-  
+  console.log('hi')
     connection.query('UPDATE buildings SET name = ?, adress = ? WHERE id = ?', [name, adress, bid], (err, result) =>{
       if (err) throw err;
       console.log(result);
@@ -76,13 +76,11 @@ router.post('/updatbuildings', (req, res) =>{
 
 router.post('/createbuilding', (req, res) =>{
   const {name, adress} = req.body;
-    console.log('here')
-    if(title == null || description == null){
-
+    console.log(req.body, name, adress)
+    if(name != null && adress != null){
     connection.query('INSERT INTO buildings (name, adress) VALUES (?, ?)', [name, adress], (err, result) =>{
       if (err) throw err;
       console.log(result);
-      res.redirect('./ShowBuildings')
     })
   }
   res.redirect('./ShowBuildings')
