@@ -1,0 +1,113 @@
+<!-- views/table.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Buildings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    td input {
+      width: 100%;
+      padding: 5px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+    }
+
+    td button {
+      padding: 5px 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    td button:hover {
+      background-color: #45a049;
+    }
+
+    td .action-button {
+      padding: 5px 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    td .action-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Buildings</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Save</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let i = 0; i < bloki.length; i++) { %>
+          <form action="/admin/updatbuildings" method="post">
+            <input type="hidden" name="bid" value="<%= bloki[i].id %>">
+            <tr>
+              <td><input type="text" name="name" value="<%= bloki[i].name %>"></td>
+              <td><input type="text" name="adress" value="<%= bloki[i].adress %>"></td>
+              <td><button type="submit">Save</button></td>
+              <td>
+                <a class="action-button" href="#">Delete</a>
+              </td>
+            </tr>
+          </form>
+        <% } %>
+      </tbody>
+    </table>
+    <div>
+        <a class="action-button" href="/admin/ShowUsers">Users</a>
+        <br>
+        <a class="action-button" href="/admin/ShowPosts">Posts</a>
+      </div>
+  </div>
+</body>
+</html>
