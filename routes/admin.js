@@ -58,6 +58,8 @@ router.post('/updateusers', (req, res) =>{
 router.get('/ShowBuildings', (req, res) =>{
   connection.query('SELECT * FROM buildings', (err, bloki) =>{
       if (err) throw err;
+      console.log('here')
+
       res.render('bloki', { bloki })
   })
 })
@@ -72,6 +74,20 @@ router.post('/updatbuildings', (req, res) =>{
     })
 })
 
+router.post('/createbuilding', (req, res) =>{
+  const {name, adress} = req.body;
+    console.log('here')
+    if(title == null || description == null){
+
+    connection.query('INSERT INTO buildings (name, adress) VALUES (?, ?)', [name, adress], (err, result) =>{
+      if (err) throw err;
+      console.log(result);
+      res.redirect('./ShowBuildings')
+    })
+  }
+  res.redirect('./ShowBuildings')
+})
+
 router.get('/ShowPosts', (req, res) =>{
   connection.query('SELECT *, u.name_surname AS username, b.adress AS location FROM posts p INNER JOIN users u ON u.id = p.user_id INNER JOIN buildings b ON b.id = p.building_id', (err, posts) =>{
       if (err) throw err;
@@ -81,7 +97,6 @@ router.get('/ShowPosts', (req, res) =>{
 
 router.post('/updatposts', (req, res) =>{
   const {title, description, pid} = req.body;
-  
     connection.query('UPDATE posts SET title = ?, description = ? WHERE id = ?', [title, description, pid], (err, result) =>{
       if (err) throw err;
       console.log(result);
