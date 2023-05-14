@@ -2,8 +2,19 @@ var express = require('express')
 var connection = require('../database.js');
 var router = express.Router()
 
-router.get('/get/:uid/:pid', (req, res) => {
+
+router.get('/getusername/:uid', (req, res) => {
     const uid = req.params.uid;
+
+    connection.query('SELECT name_surname FROM users WHERE id = ?', [uid], (err, result) => {
+        if (err) throw err;
+        res.json(result[0]);
+})
+})
+
+
+router.get('/get/:cid/:pid', (req, res) => {
+    const uid = req.params.cid;
     const pid = req.params.pid;
     connection.query('SELECT * FROM votes WHERE user_id = ? AND post_id = ?', [uid, pid], (err, result) => {
         if (err) throw err;

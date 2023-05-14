@@ -93,6 +93,17 @@ router.post('/register', express.urlencoded({ extended: true }), (req, res) => {
     });
   });
 
+  router.post('/update', (req, res) =>{
+      const {name_surname, uid, password} = req.body;
+      bcrypt.hash(password, saltRounds, (err, hash) => {
+        if (err) {
+          throw err;
+        }
+        connection.query('UPDATE users SET name_surname = ?, password = ? WHERE id = ?', [name_surname, hash, uid], (err, result) =>{
+            console.log(result);
+        })
+      });
+  })
   
 
 module.exports = router;
