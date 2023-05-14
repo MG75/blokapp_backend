@@ -8,6 +8,7 @@ var users = require('./routes/users')
 var buildings = require('./routes/buildings')
 var posts = require('./routes/posts')
 var votes = require('./routes/votes')
+const port = 3000;
 
 var app = express()
 
@@ -26,6 +27,6 @@ app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
-app.listen(3000, function () {
+app.listen(port, function () {
   console.log('Node server running on port : 3000')
 })
