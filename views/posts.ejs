@@ -81,8 +81,11 @@
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Address</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Score</th>
+          <th>User</th>
+          <th>Building</th>
           <th>Save</th>
           <th>Delete</th>
         </tr>
@@ -91,6 +94,7 @@
         <% for (let i = 0; i < posts.length; i++) { %>
           <form action="/admin/updatposts" method="post">
             <input type="hidden" name="pid" value="<%= posts[i].id %>">
+
             <tr>
               <td><input type="text" name="title" value="<%= posts[i].title %>"></td>
               <td><input type="text" name="description" value="<%= posts[i].description %>"></td>
@@ -99,7 +103,7 @@
               <td><%= posts[i].location %></td>
               <td><button type="submit">Save</button></td>
               <td>
-                <a class="action-button" href="#">Delete</a>
+                <a class="action-button" href="/admin/postdelete/<%= posts[i].id %>">Delete</a>
               </td>
             </tr>
           </form>

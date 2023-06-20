@@ -55,6 +55,8 @@ router.post('/updateusers', (req, res) =>{
     })
 })
 
+
+
 router.get('/ShowBuildings', (req, res) =>{
   connection.query('SELECT * FROM buildings', (err, bloki) =>{
       if (err) throw err;
@@ -87,7 +89,7 @@ router.post('/createbuilding', (req, res) =>{
 })
 
 router.get('/ShowPosts', (req, res) =>{
-  connection.query('SELECT *, u.name_surname AS username, b.adress AS location FROM posts p INNER JOIN users u ON u.id = p.user_id INNER JOIN buildings b ON b.id = p.building_id', (err, posts) =>{
+  connection.query('SELECT p.*, u.name_surname AS username, b.adress AS location FROM posts p INNER JOIN users u ON u.id = p.user_id INNER JOIN buildings b ON b.id = p.building_id', (err, posts) =>{
       if (err) throw err;
       res.render('posts', {posts})
   })
@@ -95,11 +97,25 @@ router.get('/ShowPosts', (req, res) =>{
 
 router.post('/updatposts', (req, res) =>{
   const {title, description, pid} = req.body;
+  console.log('here', pid)
     connection.query('UPDATE posts SET title = ?, description = ? WHERE id = ?', [title, description, pid], (err, result) =>{
       if (err) throw err;
       console.log(result);
         res.redirect('./ShowPosts')
     })
+})
+
+router.get('/postdelete/:id', (req, res) =>{
+  const pid = req.params.id;
+  connection.query('DELETE FROM votes WHERE post_id = ?', [pid] ,(err, result) =>{
+      if (err) throw err;
+      console.log(1);
+      connection.query('DELETE FROM posts WHERE id = ?', [pid], (err, result2) =>{
+          if (err) throw err;
+          console.log('removed');
+          res.redirect('/admin/ShowPosts')
+      })
+  } )
 })
 
 module.exports = router;

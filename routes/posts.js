@@ -4,8 +4,10 @@ var router = express.Router()
 
 router.get('/display/:id', (req, res) =>{
     const id = req.params.id;
+    const cas = new Date().toISOString().slice(0, 10);
+    console.log(cas);
     console.log(id, req.query);
-    connection.query('SELECT * FROM posts WHERE building_id = ? ', [id], (err, result) =>{
+    connection.query('SELECT * FROM posts WHERE building_id = ? AND expiery_date > ?', [id, cas], (err, result) =>{
         if (err) throw err;
         console.log('connected');
         res.json(result);
